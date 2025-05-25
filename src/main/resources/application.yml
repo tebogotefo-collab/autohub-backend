@@ -1,0 +1,99 @@
+spring:
+  application:
+    name: autoparts-hub
+  
+  # Database Configuration
+  datasource:
+    url: jdbc:postgresql://localhost:5432/autopartshub
+    username: postgres
+    password: StrongPassword123
+    driver-class-name: org.postgresql.Driver
+  
+  # JPA Configuration
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
+  
+  # Flyway Migration
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    clean-disabled: true
+    validate-migration-naming: true
+    out-of-order: false
+    locations: classpath:db/migration
+
+  
+  # Redis Configuration
+  redis:
+    host: localhost
+    port: 6379
+  
+  # Elasticsearch Configuration
+  elasticsearch:
+    uris: http://localhost:9200
+  
+  # Jackson Configuration
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    deserialization:
+      fail-on-unknown-properties: false
+    mapper:
+      accept-case-insensitive-enums: true
+  
+  # Security Configuration
+  security:
+    cors:
+      allowed-origins: http://localhost:3000
+      allowed-methods: GET,POST,PUT,PATCH,DELETE,OPTIONS
+      allowed-headers: Authorization,Content-Type
+    jwt:
+      secret: ${JWT_SECRET:veryL0ngS3cr3tK3yF0rAutoP4rtsHubS1gn1ngJWTt0k3ns} # Use env var in production
+      expiration-ms: 86400000 # 24 hours
+      refresh-expiration-ms: 604800000 # 7 days
+
+# Server Configuration
+server:
+  port: 8080
+
+# Logging Configuration
+logging:
+  level:
+    org.springframework.web: INFO
+    org.hibernate: INFO
+    com.mathotech.autopartshub: DEBUG
+
+# OpenAPI/Swagger Configuration
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+  packages-to-scan: com.mathotech.autopartshub.controller
+
+# App-specific Configuration
+app:
+  storage:
+    location: ./uploads
+  base-url: http://localhost:8080
+  currency: ZAR
+  pagination:
+    default-page-size: 20
+    max-page-size: 100
+  tax-rate: 0.15  # South African VAT rate (15%)
+  shipping-fee: 100.00  # Default shipping fee in ZAR
+  payment:
+    payfast:
+      merchant-id: ${PAYFAST_MERCHANT_ID:10000100}
+      merchant-key: ${PAYFAST_MERCHANT_KEY:46f0cd694581a}
+      passphrase: ${PAYFAST_PASSPHRASE:}
+      url: https://sandbox.payfast.co.za/eng/process
+      validate-url: https://sandbox.payfast.co.za/eng/query/validate
+      allowed-ips: ${PAYFAST_ALLOWED_IPS:196.33.227.224/28,196.33.232.224/28}

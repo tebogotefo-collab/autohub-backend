@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoParts Hub - Your One-Stop Auto Parts Marketplace</title>
+    <meta name="description" content="Find high-quality auto parts from trusted sellers">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="/">
+                    <i class="fas fa-cogs me-2"></i>
+                    AutoParts Hub
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/"><i class="fas fa-home me-1"></i> Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/categories"><i class="fas fa-list me-1"></i> Categories</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/sellers"><i class="fas fa-store me-1"></i> Sellers</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/deals"><i class="fas fa-tag me-1"></i> Deals</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex">
+                        <div class="search-bar me-2">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search parts...">
+                                <button class="btn btn-light" type="button"><i class="fas fa-search"></i></button>
+                            </div>
+                        </div>
+                        <div class="auth-buttons" id="authButtons">
+                            <a href="/login" class="btn btn-outline-light me-2"><i class="fas fa-sign-in-alt me-1"></i> Login</a>
+                            <a href="/register" class="btn btn-light"><i class="fas fa-user-plus me-1"></i> Register</a>
+                        </div>
+                        <div class="user-menu d-none" id="userMenu">
+                            <div class="dropdown">
+                                <button class="btn btn-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown">
+                                    <i class="fas fa-user-circle me-1"></i> <span id="username">User</span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item" href="/profile"><i class="fas fa-user me-2"></i> Profile</a></li>
+                                    <li><a class="dropdown-item" href="/orders"><i class="fas fa-shopping-bag me-2"></i> My Orders</a></li>
+                                    <li><a class="dropdown-item" href="/notifications"><i class="fas fa-bell me-2"></i> Notifications <span class="badge bg-danger" id="notificationBadge">0</span></a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="#" id="logoutBtn"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <a href="/cart" class="btn btn-light ms-2">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="badge bg-danger rounded-pill" id="cartCount">0</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero-section">
+            <div class="container">
+                <div class="row align-items-center py-5">
+                    <div class="col-md-6">
+                        <h1 class="display-4 fw-bold">Find the Right Parts for Your Vehicle</h1>
+                        <p class="lead">Discover quality auto parts from trusted sellers at competitive prices.</p>
+                        <div class="vehicle-selector p-4 bg-light rounded shadow-sm">
+                            <h5><i class="fas fa-car me-2"></i>Find Parts for Your Vehicle</h5>
+                            <form id="vehicleSearchForm">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <select class="form-select" id="carMake">
+                                            <option selected>Select Make...</option>
+                                            <option>Toyota</option>
+                                            <option>Honda</option>
+                                            <option>Ford</option>
+                                            <option>BMW</option>
+                                            <option>Mercedes-Benz</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select class="form-select" id="carModel" disabled>
+                                            <option selected>Select Model...</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select class="form-select" id="carYear" disabled>
+                                            <option selected>Select Year...</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <button type="submit" class="btn btn-primary w-100">
+                                            <i class="fas fa-search me-2"></i>Find Parts
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="/images/hero-car-parts.jpg" class="img-fluid rounded shadow" alt="Car parts collection">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="featured-categories py-5 bg-light">
+            <div class="container">
+                <h2 class="section-title text-center mb-4">Shop by Category</h2>
+                <div class="row g-4" id="categoriesContainer">
+                    <!-- Category cards will be dynamically inserted here -->
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <div class="category-card card h-100 shadow-sm">
+                            <div class="category-icon text-center pt-4">
+                                <i class="fas fa-oil-can fa-3x text-primary"></i>
+                            </div>
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Engine Oil & Fluids</h5>
+                                <p class="card-text small text-muted">Oils, coolants, and fluids</p>
+                                <a href="/category/engine-oil-fluids" class="stretched-link"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <div class="category-card card h-100 shadow-sm">
+                            <div class="category-icon text-center pt-4">
+                                <i class="fas fa-car-battery fa-3x text-primary"></i>
+                            </div>
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Batteries & Accessories</h5>
+                                <p class="card-text small text-muted">Car batteries and accessories</p>
+                                <a href="/category/batteries-accessories" class="stretched-link"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <div class="category-card card h-100 shadow-sm">
+                            <div class="category-icon text-center pt-4">
+                                <i class="fas fa-compact-disc fa-3x text-primary"></i>
+                            </div>
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Brakes & Rotors</h5>
+                                <p class="card-text small text-muted">Brake pads, rotors, and kits</p>
+                                <a href="/category/brakes-rotors" class="stretched-link"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <div class="category-card card h-100 shadow-sm">
+                            <div class="category-icon text-center pt-4">
+                                <i class="fas fa-bolt fa-3x text-primary"></i>
+                            </div>
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Electrical Parts</h5>
+                                <p class="card-text small text-muted">Sensors, alternators, and more</p>
+                                <a href="/category/electrical-parts" class="stretched-link"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-4">
+                    <a href="/categories" class="btn btn-outline-primary">View All Categories <i class="fas fa-arrow-right ms-2"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <section class="featured-products py-5">
+            <div class="container">
+                <h2 class="section-title text-center mb-4">Featured Products</h2>
+                <div class="row g-4" id="featuredProductsContainer">
+                    <!-- Product cards will be dynamically inserted here -->
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <div class="product-card card h-100 shadow-sm">
+                            <div class="position-relative">
+                                <img src="/images/product-1.jpg" class="card-img-top" alt="Product image">
+                                <span class="badge bg-danger position-absolute top-0 start-0 m-2">Sale</span>
+                                <button class="btn btn-sm btn-outline-secondary position-absolute top-0 end-0 m-2 favorite-btn">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                            </div>
+                            <div class="card-body d-flex flex-column">
+                                <p class="small text-muted mb-1">Brand Name</p>
+                                <h5 class="card-title">High Performance Oil Filter</h5>
+                                <div class="ratings mb-2">
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star-half-alt text-warning"></i>
+                                    <span class="text-muted ms-1">(24)</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mt-auto">
+                                    <div class="price-container">
+                                        <span class="text-decoration-line-through text-muted small">$29.99</span>
+                                        <span class="fw-bold text-primary">$24.99</span>
+                                    </div>
+                                    <button class="btn btn-sm btn-primary add-to-cart-btn">
+                                        <i class="fas fa-cart-plus me-1"></i> Add
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-4">
+                    <a href="/products" class="btn btn-outline-primary">View All Products <i class="fas fa-arrow-right ms-2"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <section class="why-choose-us py-5 bg-light">
+            <div class="container">
+                <h2 class="section-title text-center mb-5">Why Choose AutoParts Hub?</h2>
+                <div class="row g-4">
+                    <div class="col-md-3">
+                        <div class="feature-card text-center">
+                            <div class="feature-icon mb-3">
+                                <i class="fas fa-certificate fa-3x text-primary"></i>
+                            </div>
+                            <h5>Quality Guaranteed</h5>
+                            <p class="text-muted">We only work with trusted brands and certified sellers.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="feature-card text-center">
+                            <div class="feature-icon mb-3">
+                                <i class="fas fa-truck fa-3x text-primary"></i>
+                            </div>
+                            <h5>Fast Shipping</h5>
+                            <p class="text-muted">Quick delivery with real-time tracking information.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="feature-card text-center">
+                            <div class="feature-icon mb-3">
+                                <i class="fas fa-shield-alt fa-3x text-primary"></i>
+                            </div>
+                            <h5>Secure Payments</h5>
+                            <p class="text-muted">Multiple secure payment options for your convenience.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="feature-card text-center">
+                            <div class="feature-icon mb-3">
+                                <i class="fas fa-headset fa-3x text-primary"></i>
+                            </div>
+                            <h5>Expert Support</h5>
+                            <p class="text-muted">Our auto parts experts are here to help you find the right parts.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="top-sellers py-5">
+            <div class="container">
+                <h2 class="section-title text-center mb-4">Top Rated Sellers</h2>
+                <div class="row g-4" id="topSellersContainer">
+                    <!-- Seller cards will be dynamically inserted here -->
+                    <div class="col-md-4">
+                        <div class="seller-card card h-100 shadow-sm">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="seller-logo me-3">
+                                        <img src="/images/seller-1.jpg" class="rounded-circle" width="60" height="60" alt="Seller logo">
+                                    </div>
+                                    <div>
+                                        <h5 class="mb-1">Premium Auto Parts</h5>
+                                        <div class="ratings">
+                                            <i class="fas fa-star text-warning"></i>
+                                            <i class="fas fa-star text-warning"></i>
+                                            <i class="fas fa-star text-warning"></i>
+                                            <i class="fas fa-star text-warning"></i>
+                                            <i class="fas fa-star text-warning"></i>
+                                            <span class="text-muted ms-1">(142)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="text-muted small">Specializing in high-performance parts for luxury vehicles with over 10 years in the industry.</p>
+                                <div class="seller-stats d-flex justify-content-between">
+                                    <div class="stat-item">
+                                        <span class="stat-value">99%</span>
+                                        <span class="stat-label d-block small text-muted">Positive</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-value">1-2 days</span>
+                                        <span class="stat-label d-block small text-muted">Shipping</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-value">500+</span>
+                                        <span class="stat-label d-block small text-muted">Products</span>
+                                    </div>
+                                </div>
+                                <a href="/seller/premium-auto-parts" class="btn btn-outline-primary btn-sm d-block mt-3">View Store</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-4">
+                    <a href="/sellers" class="btn btn-outline-primary">View All Sellers <i class="fas fa-arrow-right ms-2"></i></a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer py-5 bg-dark text-white">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <h5 class="mb-3"><i class="fas fa-cogs me-2"></i>AutoParts Hub</h5>
+                    <p>Your trusted marketplace for quality auto parts from verified sellers. Find the right parts for your vehicle at competitive prices.</p>
+                    <div class="social-icons">
+                        <a href="#" class="text-white me-2"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h6 class="mb-3">Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="/" class="text-white-50">Home</a></li>
+                        <li><a href="/products" class="text-white-50">Products</a></li>
+                        <li><a href="/categories" class="text-white-50">Categories</a></li>
+                        <li><a href="/sellers" class="text-white-50">Sellers</a></li>
+                        <li><a href="/deals" class="text-white-50">Deals</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h6 class="mb-3">Customer Service</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="/contact" class="text-white-50">Contact Us</a></li>
+                        <li><a href="/faq" class="text-white-50">FAQ</a></li>
+                        <li><a href="/shipping" class="text-white-50">Shipping</a></li>
+                        <li><a href="/returns" class="text-white-50">Returns</a></li>
+                        <li><a href="/warranty" class="text-white-50">Warranty</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h6 class="mb-3">Newsletter</h6>
+                    <p class="text-white-50">Subscribe to our newsletter for the latest deals and updates.</p>
+                    <form class="newsletter-form">
+                        <div class="input-group mb-3">
+                            <input type="email" class="form-control" placeholder="Your email">
+                            <button class="btn btn-primary" type="submit">Subscribe</button>
+                        </div>
+                    </form>
+                    <div class="payment-methods mt-3">
+                        <span class="me-2"><i class="fab fa-cc-visa fa-lg"></i></span>
+                        <span class="me-2"><i class="fab fa-cc-mastercard fa-lg"></i></span>
+                        <span class="me-2"><i class="fab fa-cc-paypal fa-lg"></i></span>
+                        <span><i class="fab fa-cc-amex fa-lg"></i></span>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4 bg-secondary">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">&copy; 2025 AutoParts Hub. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end mt-3 mt-md-0">
+                    <ul class="list-inline mb-0">
+                        <li class="list-inline-item"><a href="/terms" class="text-white-50">Terms</a></li>
+                        <li class="list-inline-item"><span class="text-muted">•</span></li>
+                        <li class="list-inline-item"><a href="/privacy" class="text-white-50">Privacy</a></li>
+                        <li class="list-inline-item"><span class="text-muted">•</span></li>
+                        <li class="list-inline-item"><a href="/cookies" class="text-white-50">Cookies</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script src="/js/main.js"></script>
+</body>
+</html>
